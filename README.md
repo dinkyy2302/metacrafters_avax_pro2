@@ -35,6 +35,7 @@ A basic Ethereum smart contract for a social media application is included in th
 ### Example Code
 
 Below is an example of how to interact with the contract using script.js
+
 let provider;
 
 let signer;
@@ -42,23 +43,74 @@ let signer;
 let contract;
 
 
-async function connect() {
-    if (window.ethereum) {
-        try {
+async function connect()
+
+{
+
+
+    if (window.ethereum) 
+    
+    {
+
+    
+        try
+        
+        {
+
+        
             // Request account access if needed
+
+            
             const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+
+
+            
             console.log(`Connected account: ${accounts[0]}`);
+
+
+            
             // Initialize ethers provider and signer
+
+            
             provider = new ethers.providers.Web3Provider(window.ethereum);
+
+
+        
             signer = provider.getSigner();
+
+            
             // Create a connection to the smart contract
+
+            
             contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+
+            
             alert('Wallet connected');
-        } catch (error) {
+
+            
+        } catch (error)
+        
+        
+        {
+
+        
             console.error(error);
+
+
+            
             alert('Failed to connect wallet');
         }
-    } else {
+
+
+        
+    }
+    
+    
+    else
+    
+    
+    {
         alert('No wallet found');
     }
 }
