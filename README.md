@@ -36,7 +36,9 @@ A basic Ethereum smart contract for a social media application is included in th
 
 Below is an example of how to interact with the contract using script.js
 let provider;
+
 let signer;
+
 let contract;
 
 
