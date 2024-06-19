@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web3 and Smart Contracts Example</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Web3 and Smart Contracts Example</h1>
+    <div>
+        <button id="connectWallet">Connect Wallet</button>
+        <p id="account"></p>
+    </div>
+    <div>
+        <h2>Create Profile</h2>
+        <form id="profileForm">
+            <input type="text" id="profileName" placeholder="Name" required>
+            <input type="text" id="profileBio" placeholder="Bio" required>
+            <button type="submit">Create Profile</button>
+        </form>
+    </div>
+    <div>
+        <h2>Create Post</h2>
+        <form id="postForm">
+            <textarea id="postContent" placeholder="What's on your mind?" required></textarea>
+            <button type="submit">Create Post</button>
+        </form>
+    </div>
+    <div>
+        <h2>Posts</h2>
+        <ul id="postList"></ul>
+    </div>
+
+    <!-- Include ethers.js library from CDN -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+
+    <!-- Include your script.js file -->
+    <script src="script.js"></script>
+</body>
+</html>
