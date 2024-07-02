@@ -1,201 +1,219 @@
-// Replace with your deployed contract address
-const contractAddress ='0x1542422b513C6E75e1bFb6F01e3bfe45b5B65019';
-
-// ABI for SocialMedia contract
-const contractABI = [
-    [
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "content",
-                    "type": "string"
-                }
-            ],
-            "name": "Post_create",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "name",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "bio",
-                    "type": "string"
-                }
-            ],
-            "name": "Profile_create",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "posts",
-            "outputs": [
-                {
-                    "internalType": "address",
-                    "name": "author",
-                    "type": "address"
-                },
-                {
-                    "internalType": "string",
-                    "name": "content",
-                    "type": "string"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "Posts_get",
-            "outputs": [
-                {
-                    "components": [
-                        {
-                            "internalType": "address",
-                            "name": "author",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "string",
-                            "name": "content",
-                            "type": "string"
-                        }
-                    ],
-                    "internalType": "struct SocialMedia.Post[]",
-                    "name": "",
-                    "type": "tuple[]"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "name": "profiles",
-            "outputs": [
-                {
-                    "internalType": "string",
-                    "name": "name",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "bio",
-                    "type": "string"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        }
-    ]
-];
-
 let provider;
 let signer;
 let contract;
 
+// Replace with your contract address and ABI
+const contractAddress = '0xabEDBFB99caf46c7F208Bbc3c06d793715763dd8'; // Update with your actual contract address
 
-async function connect() {
+const contractABI = [
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "content",
+                "type": "string"
+            }
+        ],
+        "name": "Post_create",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "bio",
+                "type": "string"
+            }
+        ],
+        "name": "Profile_create",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "posts",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "author",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "content",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "Posts_get",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "address",
+                        "name": "author",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "content",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct SocialMedia.Post[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "profiles",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "bio",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+];
+
+// Function to connect to the wallet
+// Function to connect to the wallet
+async function connectWallet() {
     if (window.ethereum) {
         try {
             // Request account access if needed
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             console.log(`Connected account: ${accounts[0]}`);
+
             // Initialize ethers provider and signer
             provider = new ethers.providers.Web3Provider(window.ethereum);
             signer = provider.getSigner();
+
             // Create a connection to the smart contract
             contract = new ethers.Contract(contractAddress, contractABI, signer);
+
             alert('Wallet connected');
         } catch (error) {
-            console.error(error);
-            alert('Failed to connect wallet');
+            console.error('Failed to connect wallet:', error);
+            alert('Failed to connect wallet. Check the console for more details.');
         }
     } else {
-        alert('No wallet found');
+        alert('No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.');
     }
 }
 
-async function createProfile() {
+// Add event listener to connect wallet button
+document.getElementById('connectWalletButton').addEventListener('click', connectWallet);
+
+// Function to create profile
+async function createProfile(event) {
+    event.preventDefault();
+
+    if (!contract) {
+        alert('Connect your wallet first to create a profile.');
+        return;
+    }
+
     const name = document.getElementById('profileName').value;
     const bio = document.getElementById('profileBio').value;
 
     try {
-        // Send transaction to create profile
-        const result = await contract.methods.Profile_create(name, bio).send({ from: ethereum.selectedAddress });
-        
-        // Log the transaction result
-        console.log('Profile creation transaction result:', result);
-
-        // Show success message to user
+        await contract.Profile_create(name, bio);
         alert('Profile created successfully!');
     } catch (error) {
-        // Log and alert error message
         console.error('Error creating profile:', error);
         alert('Error creating profile. Check console for details.');
     }
 }
 
-// Function to create a new post
-async function createPost() {
+// Function to create post
+async function createPost(event) {
+    event.preventDefault();
+
+    if (!contract) {
+        alert('Connect your wallet first to create a post.');
+        return;
+    }
+
     const content = document.getElementById('postContent').value;
 
     try {
-        // Assuming contract.Post_create() is an asynchronous function that interacts with your smart contract
         await contract.Post_create(content);
         alert('Post created successfully!');
-        console.log('Post created successfully:', content);
-
-        // Optional: Update UI or perform additional actions after post creation
-        // Example: Fetch and display updated list of posts after post creation
-        await fetchPosts();
+        // Refresh post list after creating post
+        getPosts();
     } catch (error) {
         console.error('Error creating post:', error);
         alert('Error creating post. Check console for details.');
     }
 }
 
-// Function to fetch all posts
-async function fetchPosts() {
+// Function to get all posts
+async function getPosts() {
     try {
-        // Assuming contract.Posts_get() is an asynchronous function that fetches posts from your smart contract
+        if (!contract) {
+            alert('Connect your wallet first to fetch posts.');
+            return;
+        }
+
         const posts = await contract.Posts_get();
-        displayPosts(posts);
+        // Clear previous posts
+        const postList = document.getElementById('postList');
+        postList.innerHTML = '';
+
+        // Display each post
+        posts.forEach(post => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `<strong>${post.author}</strong>: ${post.content}`;
+            postList.appendChild(listItem);
+        });
     } catch (error) {
-        console.error('Error fetching posts:', error);
-        alert('Error fetching posts. Check console for details.');
+        console.error('Error getting posts:', error);
+        alert('Error getting posts. Check console for details.');
     }
 }
 
-// Display posts on the UI
-function displayPosts(posts) {
-    const postsElement = document.getElementById('posts');
-    postsElement.innerHTML = ''; // Clear previous posts
+// Add event listeners to forms
+document.getElementById('profileForm').addEventListener('submit', createProfile);
+document.getElementById('postForm').addEventListener('submit', createPost);
 
-    posts.forEach(post => {
-        const postElement = document.createElement('li');
-        postElement.innerHTML = `<strong>Author:</strong> ${post.author}<br><strong>Content:</strong> ${post.content}<br><br>`;
-        postsElement.appendChild(postElement);
-    });
-}
+// Automatically load posts when the page is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    getPosts();
+});
