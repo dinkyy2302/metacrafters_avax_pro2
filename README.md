@@ -36,85 +36,34 @@ A basic Ethereum smart contract for a social media application is included in th
 
 Below is an example of how to interact with the contract using script.js
 
-let provider;
 
-let signer;
-
-let contract;
-
-
-async function connect()
-
-{
-
-
-    if (window.ethereum) 
-    
-    {
-
-    
-        try
-        
-        {
-
-        
+// Function to connect to the wallet
+async function connectWallet() {
+    if (window.ethereum) {
+        try {
             // Request account access if needed
-
-            
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-
-
-            
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             console.log(`Connected account: ${accounts[0]}`);
 
-
-            
             // Initialize ethers provider and signer
-
-            
             provider = new ethers.providers.Web3Provider(window.ethereum);
-
-
-        
             signer = provider.getSigner();
 
-            
             // Create a connection to the smart contract
-
-            
             contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-
-            
             alert('Wallet connected');
-
-            
-        } catch (error)
-        
-        
-        {
-
-        
-            console.error(error);
-
-
-            
-            alert('Failed to connect wallet');
+        } catch (error) {
+            console.error('Failed to connect wallet:', error);
+            alert('Failed to connect wallet. Check the console for more details.');
         }
-
-
-        
-    }
-    
-    
-    else
-    
-    
-    {
-        alert('No wallet found');
+    } else {
+        alert('No Ethereum browser extension detected, install MetaMask on desktop or visit from a dApp browser on mobile.');
     }
 }
 
+// Add event listener to connect wallet button
+document.getElementById('connectWalletButton').addEventListener('click', connectWallet);
 
 ### License
 
