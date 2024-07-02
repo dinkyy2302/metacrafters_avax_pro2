@@ -3,38 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web3 and Smart Contracts Example</title>
-    <link rel="stylesheet" href="style.css">
+    <title>My DApp</title>
+    <!-- Include ethers.js from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.0/dist/ethers.umd.min.js"></script>
+    <!-- Include the CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Web3 and Smart Contracts Example</h1>
-    <div>
-        <button id="connectWallet">Connect Wallet</button>
-        <p id="account"></p>
+    <div class="container">
+        <header>
+            <h1>Welcome to My DApp</h1>
+        </header>
+        <main>
+            <button id="connectWalletButton" class="btn">Connect Wallet</button>
+            <section class="form-section">
+                <h2>Create Profile</h2>
+                <form id="profileForm" class="form">
+                    <input type="text" id="profileName" placeholder="Name" required class="input" />
+                    <input type="text" id="profileBio" placeholder="Bio" required class="input" />
+                    <button type="submit" class="btn">Create Profile</button>
+                </form>
+            </section>
+            <section class="form-section">
+                <h2>Create Post</h2>
+                <form id="postForm" class="form">
+                    <textarea id="postContent" placeholder="Post content" required class="textarea"></textarea>
+                    <button type="submit" class="btn">Create Post</button>
+                </form>
+            </section>
+            <ul id="postList" class="post-list"></ul>
+        </main>
     </div>
-    <div>
-        <h2>Create Profile</h2>
-        <form id="profileForm">
-            <input type="text" id="profileName" placeholder="Name" required>
-            <input type="text" id="profileBio" placeholder="Bio" required>
-            <button type="submit">Create Profile</button>
-        </form>
-    </div>
-    <div>
-        <h2>Create Post</h2>
-        <form id="postForm">
-            <textarea id="postContent" placeholder="What's on your mind?" required></textarea>
-            <button type="submit">Create Post</button>
-        </form>
-    </div>
-    <div>
-        <h2>Posts</h2>
-        <ul id="postList"></ul>
-    </div>
-
-    <!-- Include ethers.js library from CDN -->
-    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
-
     <!-- Include your script.js file -->
     <script src="script.js"></script>
 </body>
