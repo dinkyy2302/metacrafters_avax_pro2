@@ -38,7 +38,11 @@ Below is an example of how to interact with the contract using script.js
 
 
 // Function to connect to the wallet
-async function connectWallet() {
+
+
+async function connectWallet()
+
+{
     if (window.ethereum) {
         try {
             // Request account access if needed
@@ -63,6 +67,8 @@ async function connectWallet() {
 }
 
 // Add event listener to connect wallet button
+
+
 document.getElementById('connectWalletButton').addEventListener('click', connectWallet);
 
 ### License
